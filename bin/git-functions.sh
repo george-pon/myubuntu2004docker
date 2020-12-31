@@ -73,6 +73,11 @@ function git-initialize() {
     # これはリポジトリ毎設定なのでここでは実行しない
     # git config core.ignorecase false
 
+    # git pull した時の戦略。マージする。(rebaseはしない)(各gitリポジトリ内で実施)
+    if [ -d .git ] ; then
+        git config pull.rebase false
+    fi
+
 }
 
 function git-dirs() {
