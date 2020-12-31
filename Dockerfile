@@ -78,11 +78,18 @@ RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key a
 # RUN apt-mark hold kubectl
 
 # install helm CLI v2.9.1
-ENV HELM_CLIENT_VERSION v2.9.1
-RUN curl -fLO https://storage.googleapis.com/kubernetes-helm/helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz && \
-    tar xzf  helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz && \
+#ENV HELM_CLIENT_VERSION v2.9.1
+#RUN curl -fLO https://storage.googleapis.com/kubernetes-helm/helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz && \
+#    tar xzf  helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz && \
+#    /bin/cp  linux-amd64/helm   /usr/bin && \
+#    /bin/rm -rf rm helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz linux-amd64
+
+# install helm CLI v3.4.2
+ENV HELM3_VERSION v3.4.2
+RUN curl -fLO https://get.helm.sh/helm-${HELM3_VERSION}-linux-amd64.tar.gz && \
+    tar xzf  helm-${HELM3_VERSION}-linux-amd64.tar.gz && \
     /bin/cp  linux-amd64/helm   /usr/bin && \
-    /bin/rm -rf rm helm-${HELM_CLIENT_VERSION}-linux-amd64.tar.gz linux-amd64
+    /bin/rm -rf rm helm-${HELM3_VERSION}-linux-amd64.tar.gz linux-amd64
 
 # install kompose v1.18.0
 ENV KOMPOSE_VERSION v1.18.0
