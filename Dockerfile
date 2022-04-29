@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV MYUBUNTU2004DOCKER_VERSION build-target
 ENV MYUBUNTU2004DOCKER_VERSION latest
 ENV MYUBUNTU2004DOCKER_VERSION stable
-ENV MYUBUNTU2004DOCKER_IMAGE myubuntu2004docker
+ENV MYUBUNTU2004DOCKER_IMAGE docker.io/georgesan/myubuntu2004docker
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -48,6 +48,7 @@ RUN apt update && apt install -y --fix-missing \
         netcat \
         net-tools \
         postgresql-client \
+        python3 python3-pip \
         rsync \
         sudo \
         tcpdump \
