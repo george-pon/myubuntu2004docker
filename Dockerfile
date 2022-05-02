@@ -145,10 +145,11 @@ RUN curl -fLO https://github.com/george-pon/yamlsort/releases/download/${YAMLSOR
 ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ADD bashrc /root/.bashrc
+ADD bashrc       /root/.bashrc
+ADD inputrc      /root/.inputrc
 ADD bash_profile /root/.bash_profile
-ADD vimrc /root/.vimrc
-ADD emacsrc /root/.emacs
+ADD vimrc        /root/.vimrc
+ADD emacsrc      /root/.emacs
 ADD bin /usr/local/bin
 RUN chmod +x /usr/local/bin/*.sh
 
