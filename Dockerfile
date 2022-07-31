@@ -101,20 +101,24 @@ RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key a
 
 # install helm CLI v3
 # https://github.com/helm/helm/releases
-ENV HELM3_VERSION v3.9.1
-RUN curl -fLO https://get.helm.sh/helm-${HELM3_VERSION}-linux-amd64.tar.gz && \
-    tar xzf  helm-${HELM3_VERSION}-linux-amd64.tar.gz && \
-    /bin/cp  linux-amd64/helm   /usr/bin && \
-    /bin/rm -rf rm helm-${HELM3_VERSION}-linux-amd64.tar.gz linux-amd64
+ENV HELM3_VERSION v3.9.2
+RUN \
+    machine=$( uname -m ) && \
+    if [ x"$machine"x = x"x86_64"x ] ; then arch=amd64 ; fi && \
+    if [ x"$machine"x = x"aarch64"x ] ; then arch=arm64 ; fi && \
+    curl -fLO https://get.helm.sh/helm-${HELM3_VERSION}-linux-${arch}.tar.gz && \
+    tar xzf  helm-${HELM3_VERSION}-linux-${arch}.tar.gz && \
+    /bin/cp  linux-${arch}/helm   /usr/bin && \
+    /bin/rm -rf helm-${HELM3_VERSION}-linux-${arch}.tar.gz linux-${arch}
 
 # install kompose v1.18.0
 # https://github.com/kubernetes/kompose/releases
-ENV KOMPOSE_VERSION v1.26.1
-RUN curl -fLO https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64.tar.gz && \
-    tar xzf kompose-linux-amd64.tar.gz && \
-    chmod +x kompose-linux-amd64 && \
-    mv kompose-linux-amd64 /usr/bin/kompose && \
-    rm kompose-linux-amd64.tar.gz
+# ENV KOMPOSE_VERSION v1.26.1
+# RUN curl -fLO https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64.tar.gz && \
+#     tar xzf kompose-linux-amd64.tar.gz && \
+#     chmod +x kompose-linux-amd64 && \
+#     mv kompose-linux-amd64 /usr/bin/kompose && \
+#     rm kompose-linux-amd64.tar.gz
 
 # install stern
 # ENV STERN_VERSION 1.10.0
@@ -124,12 +128,12 @@ RUN curl -fLO https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_
 
 # install kustomize
 # https://github.com/kubernetes-sigs/kustomize/releases
-ENV KUSTOMIZE_VERSION 4.5.5
-RUN curl -fLO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
-    tar xvzf kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
-    chmod +x kustomize && \
-    mv kustomize /usr/bin/ && \
-    rm kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
+# ENV KUSTOMIZE_VERSION 4.5.5
+# RUN curl -fLO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
+#     tar xvzf kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
+#     chmod +x kustomize && \
+#     mv kustomize /usr/bin/ && \
+#     rm kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
 
 # install kubectx, kubens. see https://github.com/ahmetb/kubectx
 RUN curl -fLO https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx && \
@@ -137,13 +141,17 @@ RUN curl -fLO https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx &&
     chmod +x kubectx kubens && \
     mv kubectx kubens /usr/local/bin
 
-# install yamlsort see https://github.com/george-pon/yamlsort
+# install yamlsort see https://github.com/george-pon/yamlsort/releases
 ENV YAMLSORT_VERSION v0.1.20
-RUN curl -fLO https://github.com/george-pon/yamlsort/releases/download/${YAMLSORT_VERSION}/linux_amd64_yamlsort_${YAMLSORT_VERSION}.tar.gz && \
-    tar xzf linux_amd64_yamlsort_${YAMLSORT_VERSION}.tar.gz && \
-    chmod +x linux_amd64_yamlsort && \
-    mv linux_amd64_yamlsort /usr/bin/yamlsort && \
-    rm linux_amd64_yamlsort_${YAMLSORT_VERSION}.tar.gz
+RUN \
+    machine=$( uname -m ) && \
+    if [ x"$machine"x = x"x86_64"x ] ; then arch=amd64 ; fi && \
+    if [ x"$machine"x = x"aarch64"x ] ; then arch=arm64 ; fi && \
+    curl -fLO https://github.com/george-pon/yamlsort/releases/download/${YAMLSORT_VERSION}/linux_${arch}_yamlsort_${YAMLSORT_VERSION}.tar.gz && \
+    tar xzf linux_${arch}_yamlsort_${YAMLSORT_VERSION}.tar.gz && \
+    chmod +x linux_${arch}_yamlsort && \
+    mv linux_${arch}_yamlsort /usr/bin/yamlsort && \
+    rm linux_${arch}_yamlsort_${YAMLSORT_VERSION}.tar.gz
 
 
 
